@@ -2,7 +2,7 @@ const yargs = require('yargs')
 const notes=require('./notes.js')
 
 yargs.command({
-    command: 'add',
+    command: 'add',                     //node app2.js add --title="abc" --body="xyz"
     describe:'add a new note',
     builder: {
         title:{
@@ -26,7 +26,7 @@ yargs.command({
 
 //remove command
 yargs.command({
-    command: 'remove',
+    command: 'remove',           //node app2.js remove --title="abc"
     describe:'remove a note',
     builder:{
         title:{
@@ -38,6 +38,32 @@ yargs.command({
     handler:function(argv){
         notes.removenotes(argv.title)
 
+    }
+})
+
+//list command
+yargs.command({
+    command:'list',
+    describe:'list your notes',
+    handler(){
+        notes.listnotes()
+    }
+})
+
+//read command
+yargs.command({
+    command:'read',
+    describe:'read a notes',
+    builder:{
+        title:{
+            describe:'note title',
+            demandOption: true,
+            type:'string'
+        }
+    },
+    handler(argv){
+      notes.readnote(argv.title)
+       
     }
 })
 yargs.parse()
